@@ -1,8 +1,8 @@
+#include <fstream>
 #include <iostream>
 #include <cxxopts.hpp>
 #include <XmlParser.hpp>
 #include <ClassBuilder.hpp>
-#include <OutputFile.hpp>
 
 int main(int argc, char** argv){
     // Create and configure options for the program
@@ -47,6 +47,8 @@ int main(int argc, char** argv){
     classBuilder.setupBuilders();
     classBuilder.build();
 
-    OutputFile oFile(outputFile);
-    std::cout << (oFile.save(classBuilder.getStream()) ? "Successfuly created " : "Failed to create ") << outputFile << std::endl;
+    std::ofstream oFile;
+    oFile.open(outputFile);
+    oFile << classBuilder.getStream().str();
+    oFile.close();
 }
